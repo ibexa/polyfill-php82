@@ -64,3 +64,6 @@ jobs:
 
             -   name: Run PHPStan analysis
                 run: composer run-script phpstan
+
+            -   name: Run test suite
+                run: composer run-script --timeout=600 test
