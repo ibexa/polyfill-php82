@@ -1,6 +1,7 @@
 {
     "name": "ibexa/polyfill-php82",
     "type": "library",
+    "license": "(GPL-2.0-only or proprietary)",
     "require": {
         "php": ">=7.4"
     },
