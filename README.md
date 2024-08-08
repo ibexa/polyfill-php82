@@ -1,5 +1,21 @@
-Ibexa DXP \<Package name\>
+Ibexa PHP 8.2 Polyfill Package
 ====================
+
+This package provides access to functions not otherwise provided by Symfony Polyfills.
+
+To use it in your project, add it using Composer:
+⏩ `composer require ibexa/polyfill-php82`
+
+Then you can use functions provided by the package by importing them:
+```php
+use Ibexa\PolyfillPhp82\iterator_to_array;
+
+// Now we can use `iterator_to_array` function (although namespaced) as if it was
+// with PHP 8.2 functionality (extended arguments)
+$anyIterable = ['some_simple_array_which_would_not_work_in_php_82'];
+$array = iterator_to_array($anyIterable);
+
+```
 
 ## COPYRIGHT
 Copyright (C) 1999-2024 Ibexa AS (formerly eZ Systems AS). All rights reserved.
