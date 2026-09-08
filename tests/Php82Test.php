@@ -28,6 +28,13 @@ final class Php82Test extends TestCase
         ], $result);
     }
 
+    public function testDeclarationFileCanBeLoadedTwice(): void
+    {
+        require dirname(__DIR__) . '/src/iterator_to_array.php';
+
+        self::assertTrue(function_exists('Ibexa\PolyfillPhp82\iterator_to_array'));
+    }
+
     public function testArrayForIteratorToArray(): void
     {
         $result = iterator_to_array([
