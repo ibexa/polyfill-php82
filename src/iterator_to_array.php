@@ -18,7 +18,7 @@ if (!function_exists(__NAMESPACE__ . '\\iterator_to_array')) {
      */
     function iterator_to_array(iterable $iterator, bool $preserve_keys = true): array
     {
-        if (\PHP_VERSION_ID > 8_02_00) {
+        if (\PHP_VERSION_ID >= 8_02_00) {
             /** @var \Traversable<T> $iterator */
             return \iterator_to_array($iterator, $preserve_keys);
         }
@@ -27,6 +27,6 @@ if (!function_exists(__NAMESPACE__ . '\\iterator_to_array')) {
             return \iterator_to_array($iterator, $preserve_keys);
         }
 
-        return $iterator;
+        return $preserve_keys ? $iterator : array_values($iterator);
     }
 }
