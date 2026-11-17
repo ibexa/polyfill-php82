@@ -14,7 +14,7 @@ if (!function_exists(__NAMESPACE__ . '\\iterator_to_array')) {
      *
      * @param iterable<T> $iterator
      *
-     * @return array<T>
+     * @return ($preserve_keys is true ? array<T> : list<T>)
      */
     function iterator_to_array(iterable $iterator, bool $preserve_keys = true): array
     {
