@@ -14,18 +14,31 @@ use PHPUnit\Framework\TestCase;
 
 final class Php82Test extends TestCase
 {
-    public function testGeneratorForIteratorToArray(): void
+    /**
+     * @dataProvider provideIteratorToArray
+     *
+     * @param iterable<mixed> $iterator
+     * @param array<mixed> $expected
+     */
+    public function testIteratorToArray(iterable $iterator, bool $preserveKeys, array $expected): void
     {
-        $generator = static function (): Generator {
-            yield 'foo' => 'bar';
-            yield 'bar' => 'foo';
-        };
-        $result = iterator_to_array($generator());
+        self::assertSame($expected, iterator_to_array($iterator, $preserveKeys));
+    }
 
-        self::assertSame([
+    /**
+     * @return iterable<string, array{iterable<mixed>, bool, array<mixed>}>
+     */
+    public static function provideIteratorToArray(): iterable
+    {
+        $items = [
             'foo' => 'bar',
-            'bar' => 'foo',
-        ], $result);
+            42 => 'baz',
+        ];
+
+        yield 'array, preserving keys' => [$items, true, $items];
+        yield 'array, not preserving keys' => [$items, false, ['bar', 'baz']];
+        yield 'generator, preserving keys' => [self::generate($items), true, $items];
+        yield 'generator, not preserving keys' => [self::generate($items), false, ['bar', 'baz']];
     }
 
     public function testDeclarationFileCanBeLoadedTwice(): void
@@ -35,16 +48,13 @@ final class Php82Test extends TestCase
         self::assertTrue(function_exists('Ibexa\PolyfillPhp82\iterator_to_array'));
     }
 
-    public function testArrayForIteratorToArray(): void
+    /**
+     * @param array<mixed> $items
+     *
+     * @return \Generator<mixed>
+     */
+    private static function generate(array $items): Generator
     {
-        $result = iterator_to_array([
-            'foo' => 'bar',
-            'bar' => 'foo',
-        ]);
-
-        self::assertSame([
-            'foo' => 'bar',
-            'bar' => 'foo',
-        ], $result);
+        yield from $items;
     }
 }
